@@ -1,11 +1,31 @@
 import React from "react";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { PrivateRoute } from "./PrivateRoute";
 import "./App.css";
-import Login from "./screens/Login";
+import { Home, Login, Register, Profile } from "./screens";
 
 function App() {
   return (
     <div className="App">
-      <Login />
+      <Router>
+        <PrivateRoute path="/" exact component={Home} />
+        <PrivateRoute path="/profile" component={Profile} />
+        <Route
+          path="/login"
+          render={() =>
+            localStorage.getItem("token") ? (
+              <Redirect
+                to={{
+                  pathname: "/"
+                }}
+              />
+            ) : (
+              <Login />
+            )
+          }
+        />
+        <Route path="/register" component={Register} />
+      </Router>
     </div>
   );
 }
