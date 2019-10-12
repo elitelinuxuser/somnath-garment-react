@@ -8,7 +8,8 @@ import {
   Button,
   Modal,
   Header,
-  Icon
+  Icon,
+  Container
 } from "semantic-ui-react";
 import { Icon as IconAntd } from "antd";
 
@@ -41,95 +42,88 @@ class Orders extends Component {
     return (
       <div>
         <CardGroup>
-          {orders.map(
-            (order, index) =>
-              order.status !== "completed" && (
-                <Card key={index}>
-                  <Card.Content>
-                    <Card.Header>{order.company.name}</Card.Header>
-                    <Card.Meta>Order No: {order.orderNo}</Card.Meta>
-                    <Card.Description>
-                      <p>
-                        <strong>
-                          Status:{" "}
-                          <span
-                            style={{
-                              color:
-                                order.status === "taken"
-                                  ? "blue"
-                                  : order.status === "doing"
-                                  ? "red"
-                                  : "green"
-                            }}
-                          >
-                            {order.status}
-                          </span>
-                        </strong>
-                      </p>
-                      <p>
-                        <strong>Roll/Lump: {order.rollOrLump}</strong>
-                      </p>
-                      <strong>Total Metres: {order.totalMeters}</strong>
-                    </Card.Description>
-                  </Card.Content>
-                  <Card.Content extra>
-                    <div className="ui two buttons">
-                      <Modal
-                        trigger={
-                          <Button basic color="red" onClick={this.handleOpen}>
-                            More Details
-                          </Button>
-                        }
-                        closeIcon
-                        open={this.state.modalOpen}
-                        onClose={this.handleClose}
+          {orders.map((order, index) => (
+            //   order.status !== "completed" &&
+            <Card key={index}>
+              <Card.Content>
+                <Card.Header>{order.company.name}</Card.Header>
+                <Card.Meta>Order No: {order.orderNo}</Card.Meta>
+                <Card.Description>
+                  <p>
+                    <strong>
+                      Status:{" "}
+                      <span
+                        style={{
+                          color:
+                            order.status === "taken"
+                              ? "blue"
+                              : order.status === "doing"
+                              ? "red"
+                              : "green"
+                        }}
                       >
-                        <Modal.Header style={{ textAlign: "center" }}>
-                          Order No: {order.orderNo}
-                        </Modal.Header>
-                        <Modal.Content image scrolling>
-                          <Modal.Description>
-                            <Header style={{ textAlign: "center" }}>
-                              {order.company.name}
-                              <IconAntd
-                                type="edit"
-                                style={{ float: "right" }}
-                              />
-                            </Header>
-                            <h3>Order Details:</h3>
-                            <p>
-                              <strong>Quantity: </strong> {order.quantity}
-                            </p>
-                            <p>
-                              <strong>Total Metres: </strong>{" "}
-                              {order.totalMeters}
-                            </p>
-                            <p>
-                              <strong>Receiver Name: </strong>{" "}
-                              {order.receiverName}
-                            </p>
-                            <p>
-                              <strong>Amount to be received: </strong>{" "}
-                              {order.amountToBeReceived}
-                            </p>
+                        {order.status}
+                      </span>
+                    </strong>
+                  </p>
+                  <p>
+                    <strong>Roll/Lump: {order.rollOrLump}</strong>
+                  </p>
+                  <strong>Total Metres: {order.totalMeters}</strong>
+                </Card.Description>
+              </Card.Content>
+              <Card.Content extra>
+                <Modal
+                  trigger={
+                    <Button basic color="red" onClick={this.handleOpen}>
+                      More Details
+                    </Button>
+                  }
+                  closeIcon
+                  open={this.state.modalOpen}
+                  onClose={this.handleClose}
+                >
+                  <Modal.Header style={{ textAlign: "center" }}>
+                    Order No: {order.orderNo}
+                  </Modal.Header>
+                  <Modal.Content>
+                    <Modal.Description>
+                      <Header style={{ textAlign: "center" }}>
+                        {order.company.name}
+                        <IconAntd type="edit" style={{ float: "right" }} />
+                      </Header>
+                      <h3>Order Details:</h3>
+                      <p>
+                        <strong>Quantity: </strong> {order.quantity}
+                      </p>
+                      <p>
+                        <strong>Total Metres: </strong> {order.totalMeters}
+                      </p>
+                      <p>
+                        <strong>Receiver Name: </strong> {order.receiverName}
+                      </p>
+                      <p>
+                        <strong>Amount to be received: </strong>{" "}
+                        {order.amountToBeReceived}
+                      </p>
 
-                            <p>
-                              <strong>Order Description: </strong>
-                              {order.description}
-                            </p>
-                          </Modal.Description>
-                        </Modal.Content>
-                        <Modal.Actions>
-                          <Button primary onClick={this.handleClose}>
-                            <Icon name="chevron left" /> Go Back
-                          </Button>
-                        </Modal.Actions>
-                      </Modal>
-                    </div>
-                  </Card.Content>
-                </Card>
-              )
-          )}
+                      <p>
+                        <strong>Order Description: </strong>
+                        <Container style={{ margin: "10px" }}>
+                          {order.description}
+                        </Container>
+                      </p>
+                    </Modal.Description>
+                  </Modal.Content>
+                  <Modal.Actions>
+                    <Button primary onClick={this.handleClose}>
+                      <Icon name="chevron left" /> Go Back
+                    </Button>
+                  </Modal.Actions>
+                </Modal>
+              </Card.Content>
+            </Card>
+          ))}
         </CardGroup>
       </div>
     );

@@ -10,10 +10,10 @@ import { logout } from "../../actions/auth";
 import Employees from "./Employees/Employees";
 import Orders from "./Orders/Orders";
 import Users from "./Users/Users";
+import Companies from "./Companies/Companies";
 import "./Home.css";
 
 const { Header, Content, Sider } = Layout;
-const { SubMenu } = Menu;
 
 class Home extends Component {
   state = {
@@ -95,6 +95,10 @@ class Home extends Component {
               <Icon type="user" />
               <span>Users</span>
             </Menu.Item>
+            <Menu.Item key="4" onClick={this.handleSelect}>
+              <Icon type="user" />
+              <span>Companies</span>
+            </Menu.Item>
           </Menu>
         </Sider>
         <Layout style={{ marginLeft: this.state.collapsed ? 80 : 200 }}>
@@ -129,6 +133,7 @@ class Home extends Component {
               {selected === "1" && <Orders />}
               {selected === "2" && <Employees />}
               {selected === "3" && <Users />}
+              {selected === "4" && <Companies />}
             </div>
           </Content>
         </Layout>
