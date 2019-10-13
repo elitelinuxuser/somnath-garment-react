@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table } from "antd";
+import { Table, Button } from "antd";
 import axios from "axios";
 
 import { SERVER_URI, getConfig } from "../../../globals";
@@ -7,15 +7,21 @@ import { SERVER_URI, getConfig } from "../../../globals";
 class Companies extends Component {
   state = {
     loading: true,
-    employees: []
+    companies: []
   };
 
   componentDidMount() {
-    axios.get(`${SERVER_URI}/employees/all`, getConfig).then(() => {});
+    axios.get(`${SERVER_URI}/company/all`, getConfig).then(companies => {
+      console.log(companies);
+      this.setState({
+        companies: companies.data,
+        loading: false
+      });
+    });
   }
 
   render() {
-    const { loading, employees } = this.state;
+    const { loading, companies } = this.state;
     const columns = [
       {
         title: "Name",
@@ -23,29 +29,36 @@ class Companies extends Component {
         render: text => <a>{text}</a>
       },
       {
-        title: "Employee ID",
+        title: "Contact No",
         className: "column-money",
-        dataIndex: "employeeId"
+        dataIndex: "contactNo"
       },
       {
-        title: "Address",
-        dataIndex: "address"
+        title: "GST No",
+        dataIndex: "gstNo"
       },
       {
         title: "Action",
         dataIndex: "",
         key: "x",
-        render: () => <a>Delete</a>
+        render: () => <a>View</a>
       }
     ];
     return (
       <div>
+        <Button
+          type="primary"
+          style={{ float: "right", margin: "10px", zIndex: 100 }}
+          onClick={this._addUser}
+        >
+          Add Company
+        </Button>
         <Table
           loading={loading}
           columns={columns}
-          dataSource={employees}
+          dataSource={companies}
           bordered
-          title={() => "Header"}
+          title={() => <div>Companies</div>}
           footer={() => "Footer"}
         />
       </div>
