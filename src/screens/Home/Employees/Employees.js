@@ -11,7 +11,13 @@ class Employees extends Component {
   };
 
   componentDidMount() {
-    axios.get(`${SERVER_URI}/employees/all`, getConfig).then(() => {});
+    const { employees } = this.state;
+    axios.get(`${SERVER_URI}/employees/all`, getConfig).then(employee => {
+      this.setState({
+        loading: false,
+        employees: [...employees, employee]
+      });
+    });
   }
 
   render() {

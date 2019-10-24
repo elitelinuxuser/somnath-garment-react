@@ -4,5 +4,8 @@ const getConfig = {
     "x-auth-token": localStorage.getItem("token")
   }
 };
+const postHeaders = {
+  "content-type": "application/json"
+};
 
-export { SERVER_URI, getConfig };
+export { SERVER_URI, getConfig, postHeaders };
